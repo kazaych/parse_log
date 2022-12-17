@@ -41,7 +41,7 @@ def get_start_time():
         contents = f_obj.read()
     return parse_time_from_line(contents)
 
-
+# open log file and compare last line with start_time and if line time >= send to tlg
 def open_log(start_time, file):
     with open(file) as f_obj:
         lines = f_obj.readlines()
