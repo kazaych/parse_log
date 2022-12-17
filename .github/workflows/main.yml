@@ -55,5 +55,5 @@ jobs:
         username: ${{ secrets.NAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
-        source: "parse_log.py"
+        source: "log_parser.py"
         target: "/home/kazay/"
