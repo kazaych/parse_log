@@ -3,9 +3,11 @@ import requests
 import time
 import re
 import os.path 
+import glob
 
+file_lst = glob.glob('/opt/DemonX_scripts/logs/errors_*')
 start_time_file = "/home/kazay/start_time"
-log_file = "/opt/DemonX_scripts/logs/errors_moisklad_to_fulllog.log"
+# log_file = "/opt/DemonX_scripts/logs/errors_moisklad_to_fulllog.log"
 
 def sendMessage(message):
     TOKEN = "5989022565:AAHO5SOwdlpdMdAFXWXtJxdli4WXy8XyYW8"
@@ -40,18 +42,28 @@ def get_start_time():
     return parse_time_from_line(contents)
 
 
-def open_log(start_time):
-    with open(log_file) as f_obj:
+def open_log(start_time, file):
+    with open(file) as f_obj:
         lines = f_obj.readlines()
-    for line in lines:
+    # for line in lines:
+    #     if compare_date(start_time, parse_time_from_line(line)) == True:
+    #         sendMessage(line)
+    #         print(line)
+    #         time.sleep(5)
+    for line in reversed(list(open(file))):
         if compare_date(start_time, parse_time_from_line(line)) == True:
             sendMessage(line)
+            print(line)
             time.sleep(5)
+        else:
+            break
 
-
-if os.path.exists(start_time_file):
-    start_time = get_start_time()
-    open_log(start_time)
+for file in file_lst:
+    if os.path.exists(file):
+        start_time = get_start_time()
+        open_log(start_time, file)
 
 write_start_script_time()
 print(get_start_time())
+
+
