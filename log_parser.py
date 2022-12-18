@@ -4,11 +4,18 @@ import time
 import re
 import os.path 
 import glob
-
-file_lst = glob.glob('/opt/DemonX_scripts/logs/errors_*')
-start_time_file = "/home/kazay/start_time"
+import sys
 
 
+
+file_lst = glob.glob(str(sys.argv[1]))
+start_time_file = str(sys.argv[2])
+date_format = '%Y-%m-%d %H:%M:%S'
+
+#  List with unsorted lines from all logs
+unsorted_lines= []
+
+#  Send message to telegram
 def sendMessage(message):
     TOKEN = "5989022565:AAHO5SOwdlpdMdAFXWXtJxdli4WXy8XyYW8"
     chat_id = "-1001604614259"
@@ -18,7 +25,7 @@ def sendMessage(message):
 
 def write_start_script_time(file_location=start_time_file):
     with open(start_time_file, mode='w') as file:
-        file.write('last start at %s.' %(datetime.datetime.now() + datetime.timedelta(hours = 3)))
+        file.write('last start at %s.' %(datetime.datetime.now() + datetime.timedelta(hours = 0)))
 
 
 def parse_time_from_line(line):
@@ -41,7 +48,7 @@ def get_start_time():
         contents = f_obj.read()
     return parse_time_from_line(contents)
 
-# open log file and compare last line with start_time and if line time >= send to tlg
+# open log file and compare last line with start_time and if line time >= start time then add line to 
 def open_log(start_time, file):
     with open(file) as f_obj:
         lines = f_obj.readlines()
@@ -52,18 +59,26 @@ def open_log(start_time, file):
     #         time.sleep(5)
     for line in reversed(list(open(file))):
         if compare_date(start_time, parse_time_from_line(line)) == True:
-            sendMessage(line)
+            unsorted_lines.append(line)
             print(line)
-            time.sleep(5)
         else:
             break
 
+# start parsing file from file list 
 for file in file_lst:
     if os.path.exists(file):
         start_time = get_start_time()
-        open_log(start_time, file)
+        if start_time is not None:
+           open_log(start_time, file)  
+        else:
+            write_start_script_time()
 
+# sort inputDateList by time
+sorted_line_list = sorted(unsorted_lines, key=lambda x: datetime.datetime.strptime(parse_time_from_line(x), date_format))
+
+for line in sorted_line_list:
+    sendMessage(line)
+
+#  Write date and time to start_time file
 write_start_script_time()
 print(get_start_time())
-
-
