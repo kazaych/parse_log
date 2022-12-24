@@ -27,7 +27,7 @@ def sendMessage(message):
 # Write start time of the script
 def write_start_script_time(file_location=start_time_file):
     with open(start_time_file, mode='w') as file:
-        file.write('last start at %s.' %(datetime.datetime.now() + datetime.timedelta(hours = 0)))
+        file.write('last start at %s.' %(datetime.datetime.now() + datetime.timedelta(hours = 3)))
 
 
 # Return only time from log line if there is no time format in line return current time
