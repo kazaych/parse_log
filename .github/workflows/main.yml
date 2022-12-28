@@ -57,4 +57,3 @@ jobs:
         port: ${{ secrets.PORT }}
         source: "log_parser.py"
         target: "/home/kazay/"
-        script: sudo systemctl restart log_parse.service
