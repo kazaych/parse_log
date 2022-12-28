@@ -22,7 +22,7 @@ unsorted_lines= []
 def sendMessage(message):
     TOKEN = "5989022565:AAHO5SOwdlpdMdAFXWXtJxdli4WXy8XyYW8"
     chat_id = "-1001604614259"
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message + u'\U0001F4A8'}"
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
     print(requests.get(url).json())  # this sends the message to tlg
 
 
