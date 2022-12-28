@@ -58,4 +58,4 @@ jobs:
         source: "log_parser.py"
         target: "/home/kazay/"
         run: |
-          sudo systemctl restarts log_parse.service
+          sudo systemctl restart log_parse.service
