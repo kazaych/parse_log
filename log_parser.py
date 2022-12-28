@@ -85,6 +85,8 @@ sorted_line_list = sorted(unsorted_lines, key=lambda x: datetime.datetime.strpti
 
 # Send messages to telegramm from sorted_line_list
 for line in sorted_line_list:
+    line.replace('type=error msg=', '')
+    line.replace('time=', '')
     sendMessage(line)
     time.sleep(3)
 
