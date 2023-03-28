@@ -51,9 +51,10 @@ jobs:
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets.HOST }}
+        host: "13.53.110.74"
+        host: "16.170.209.148"
         username: ${{ secrets.NAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         source: "log_parser.py"
-        target: "/home/kazay/"
+        target: "/home/ubuntu/"
